@@ -1,5 +1,10 @@
 package com.yash.pms.model;
 
+/**
+ * Product pojo class
+ * @author dheerendra.kag
+ *
+ */
 public class Product {
     private int id;
     private String pName;
