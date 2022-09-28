@@ -1,5 +1,7 @@
 package com.yash.assignment.collections;
 
+import java.util.HashSet;
+
 class Node{
 	int data;
 	Node left, right;
@@ -24,6 +26,7 @@ public class BinarySearchTreeExample {
             root.left = insert(root.left, data);
         if (data > root.data)
             root.right = insert(root.right, data);
+        
         return root;
     }
     
@@ -39,13 +42,14 @@ public class BinarySearchTreeExample {
     
 	public static void main(String[] args) {
         BinarySearchTreeExample b = new BinarySearchTreeExample();
-        int arr[] = { 1, 2, 3, 2, 5, 4, 4 };
+        //int arr[] = { 1, 2, 3, 2, 5, 4, 4 };
+        int arr[] = { 10, 2, 13, 2, 15, 4, 4, 13 };
         int n = arr.length;
         for (int i = 0; i < n; i++)
         {
             b.root = insert(b.root,arr[i]);
         }
         b.printInOrder(b.root);
-	}
+    }
 
 }
