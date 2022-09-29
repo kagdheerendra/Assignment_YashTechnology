@@ -3,6 +3,7 @@ package com.yash.assignment.java8;
 import java.util.Scanner;
 import java.util.function.BiPredicate;
 import java.util.function.Predicate;
+import java.util.stream.IntStream;
 
 public class CheckTwoInteger {
 
@@ -16,28 +17,37 @@ public class CheckTwoInteger {
 			System.out.println("Press 4 to check given no is palindrome");
 			System.out.println("Press 5 to exit");
 			int op = sc.nextInt();
-			System.out.println("Enter the num");
-			int num = sc.nextInt();
 			switch (op) {
 			case 1: {
+				System.out.println("Enter the num");
+				int num = sc.nextInt();
 				checkEvenNumber(num);
 				break;
 			}
 			case 2: {
+				System.out.println("Enter the num");
+				int num = sc.nextInt();
 				checkoddNumber(num);
 				break;
 			}
 			case 3: {
+				System.out.println("Enter the num");
+				int num = sc.nextInt();
 				checkArmstrongNumber(num);
 				break;
 			}
 			case 4: {
+				System.out.println("Enter the num");
+				int num = sc.nextInt();
 				checkPalindromeNumber(num);
 				break;
 			}
-			case 5: flag = false;
+			case 5: {
+				flag = false;
+			    break;
+			}
 			default:
-				throw new IllegalArgumentException("Unexpected value: " + num);
+				throw new IllegalArgumentException("Unexpected value: " + op);
 			}	    	
 	    }while(flag);
 	}
@@ -57,13 +67,12 @@ public class CheckTwoInteger {
 	}
 	
 	public static void checkArmstrongNumber(int num) {
-		int rem = 0, rev=0;
 		int copyNumber = num;
-		while(num>0) {
-			rem = num%10;
-			rev = rev + rem*rem*rem;
-			num = num/10;
-		}
+		int pow = String.valueOf(num).length();
+		int rev = IntStream.iterate(num, i -> i / 10)
+	            .limit(pow)
+	            .map(i->(int)Math.pow(i%10, pow))
+	            .sum();
 		BiPredicate<Integer, Integer> b = (Integer num1, Integer num2)->num1.equals(num2);
 		if(b.test(copyNumber, rev)) {
 			System.out.println(copyNumber + " is an Armstrong number.");
@@ -72,13 +81,10 @@ public class CheckTwoInteger {
 	
 	public static void checkPalindromeNumber(int num) {
         int copyNum;
-        int rem = 0,rev = 0;
         copyNum = num;
-        while(num>0) {
-        	rem = num%10;
-        	rev = rem + rev*10;
-        	num = num/10;
-        }
+        int rev = IntStream.iterate(num, n -> n != 0, i -> i / 10)
+                .map(n -> n % 10)
+                .reduce(0, (a, b) -> a * 10 + b);
         BiPredicate<Integer, Integer> p = (Integer num1, Integer num2)->num1.equals(num2);
         if(p.test(copyNum, rev)) {
         	System.out.println("palindrome number");
