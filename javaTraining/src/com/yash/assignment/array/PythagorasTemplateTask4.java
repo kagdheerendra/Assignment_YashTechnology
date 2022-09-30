@@ -6,7 +6,7 @@ package com.yash.assignment.array;
  * @author dheerendra.kag
  *
  */
-public class PythagorasTemplate {
+public class PythagorasTemplateTask4 {
    public static void main(String args[]) {
 	   int ar[] = { 3, 1, 4, 6, 5 };
 	   int n = ar.length;

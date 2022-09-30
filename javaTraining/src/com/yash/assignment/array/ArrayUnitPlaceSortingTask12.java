@@ -8,7 +8,7 @@ import java.util.Arrays;
  * @author dheerendra.kag
  *
  */
-public class ArrayUnitPlaceSorting {
+public class ArrayUnitPlaceSortingTask12 {
 
     public static int getLastDigit(int n){
         int lastDigit = Math.abs(n % 10);

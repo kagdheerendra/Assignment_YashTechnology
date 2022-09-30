@@ -1,6 +1,6 @@
 package com.yash.assignment.array;
 
-public class EvenOddPrimeNumber {
+public class EvenOddPrimeNumberTask5 {
 
 	public static void main(String[] args) {
        int num[] = {1,2,3,4,5,6,7,8,9};

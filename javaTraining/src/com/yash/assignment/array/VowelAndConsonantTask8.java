@@ -2,7 +2,7 @@ package com.yash.assignment.array;
 
 import java.util.Arrays;
 
-public class VowelAndConsonant {
+public class VowelAndConsonantTask8 {
 
 	public static void main(String[] args) {
          String name = "yashtechnology";

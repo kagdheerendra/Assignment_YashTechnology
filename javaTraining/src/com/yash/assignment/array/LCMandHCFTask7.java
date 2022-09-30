@@ -5,7 +5,7 @@ package com.yash.assignment.array;
  * @author dheerendra.kag
  *
  */
-public class LCMandHCF {
+public class LCMandHCFTask7 {
 
 	public static void main(String[] args) {
         int a[]={63,105,210};

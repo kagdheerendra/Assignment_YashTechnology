@@ -7,7 +7,7 @@ import java.util.Arrays;
  * @author dheerendra.kag
  *
  */
-public class ThirdLargestNumber {
+public class ThirdLargestNumberTask1 {
    public static void main(String args[]) {
 	   int num[] = {4,5,6,1,2,3,9,8};
 	   for(int i=0; i<num.length; i++) {

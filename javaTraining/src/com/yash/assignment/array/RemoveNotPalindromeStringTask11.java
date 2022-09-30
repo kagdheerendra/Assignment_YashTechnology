@@ -5,7 +5,7 @@ import java.util.Arrays;
 /*
  * WAP to remove the String which is not palindrome string from the array of String.
  */
-public class RemoveNotPalindromeString {
+public class RemoveNotPalindromeStringTask11 {
 
 	public static void main(String[] args) {
        String name[] = {"akka", "akku", "abba","vbv"};

@@ -8,7 +8,7 @@ import java.util.Arrays;
  * @author dheerendra.kag
  *
  */
-public class ArraySorting {
+public class ArraySortingTask6 {
    public static void main(String args[]) {
 	   int ar[] = {2,1,4,3,6,5,8,7,9};
 	   Arrays.sort(ar);

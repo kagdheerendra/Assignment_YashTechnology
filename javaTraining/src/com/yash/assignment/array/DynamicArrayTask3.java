@@ -8,11 +8,11 @@ import java.util.Arrays;
  * @author dheerendra.kag
  *
  */
-public class DynamicArray {
+public class DynamicArrayTask3 {
 	private int array[];
 	private int size;
 	private int capacity;
-	public DynamicArray() {
+	public DynamicArrayTask3() {
         array = new int[2];
         size=0;
         capacity=2;
@@ -36,7 +36,7 @@ public class DynamicArray {
         System.out.println("elements in array are :"+Arrays.toString(array));
     }
 	   public static void main(String args[]) {
-		   DynamicArray d = new DynamicArray();
+		   DynamicArrayTask3 d = new DynamicArrayTask3();
 		   d.addElement(1);
 	       d.addElement(2);
 	       d.printElements();
