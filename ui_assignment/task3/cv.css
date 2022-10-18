@@ -1,0 +1,54 @@
+* {
+	font-family: Arial;
+	text-align: center;
+}
+
+div.main {
+	text-align: center;
+	border: 2px #000000;
+	border-style: solid;
+	margin-left: 300px;
+	margin-right: 300px;
+	height: 100%;
+}
+
+h1 {
+	letter-spacing: 7px;
+	background-color: #D3D3D3;
+	font-size: 20px;
+	background-size: 500px 100px;	
+	border: 2px solid #D3D3D3;
+	padding: 10px;
+	color: #005293;
+	text-transform: uppercase;
+
+
+}
+
+h2 {
+	letter-spacing: 6px;
+	font-size: 20;
+	text-align: left;
+	color: #8F0444;
+
+}
+
+.grid-container {
+	display: grid;
+	grid-template-columns: auto auto;
+	padding: 10px;
+}
+
+.grid-item {
+	/* padding: 20px; */
+	font-size: 20px;
+	text-align: left;
+}
+
+
+.grid-item1 {
+	/* padding: 20px; */
+	font-size: 20px;
+	text-align: left;
+
+}

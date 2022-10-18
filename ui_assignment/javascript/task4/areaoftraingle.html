@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset=utf-8 />
+    <title>The area of a triangle</title>
+</head>
+
+<body>
+    <p id="area"></p>
+    <script>
+        var a = 5;
+        var b = 6;
+        var c = 7;
+        var s = (a + b + c) / 2;
+        var area = Math.sqrt(s * ((s - a) * (s - b) * (s - c)));
+        document.getElementById('area').innerHTML = "area of traingle is = " + area;
+    </script>
+</body>
+
+</html>

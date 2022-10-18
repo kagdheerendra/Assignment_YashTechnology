@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>JavaScript basic animation</title>
+</head>
+
+<body>
+    <p id="2016"></p>
+    <p id="2000"></p>
+    <p id="1700"></p>
+    <p id="1800"></p>
+    <script type="text/javascript">
+        function leapyear(year) {
+            return (year % 100 === 0) ? (year % 400 === 0) : (year % 4 === 0);
+        }
+        document.getElementById('2016').innerHTML = "2016 is leap year : "+leapyear(2016);
+        document.getElementById('2000').innerHTML = "2000 is leap year : "+leapyear(2000);
+        document.getElementById('1700').innerHTML = "1700 is leap year : "+leapyear(1700);
+        document.getElementById('1800').innerHTML = "1800 is leap year : "+leapyear(1800);
+    </script>
+</body>
+
+</html>

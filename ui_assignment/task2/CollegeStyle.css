@@ -1,0 +1,38 @@
+*{
+	font-family: Arial;
+	text-align: center;
+}
+
+div.main{
+	text-align: center;
+	border: 5px solid #6495ed;
+	margin-left: 350px;
+	margin-right: 350px;
+}
+
+h2{
+	font-size:25;
+	
+}
+
+.grid-container {
+  display: grid;
+  grid-template-columns: auto auto ;
+  padding: 10px;
+}
+
+.grid-item {
+   padding: 20px;
+  font-size: 20px;
+  text-align: center;
+}
+
+.vl {
+  border-left: 6px solid #6495ed;
+  height: 200px;
+  position: absolute;
+  left: 50%;
+  margin-left: -3px;
+ 
+}
+
