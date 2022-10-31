@@ -1,0 +1,19 @@
+// :host {
+//     display: flex;
+//     justify-content: center;
+//   }
+  
+  mat-card {
+    mat-card-title,
+    mat-card-content {
+    //   display: flex;
+    //   justify-content: center;
+  
+      form {
+        .mat-form-field {
+          width: 100%;
+          min-width: 300px;
+        }
+      }
+    }
+  }
