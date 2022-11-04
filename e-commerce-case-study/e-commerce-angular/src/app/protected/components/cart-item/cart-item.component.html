@@ -5,7 +5,7 @@
   <p style="padding-top: 10px"> To change Quantity, Edit Quantity and Click on Update button</p> -->
   <div fxLayout="row" fxLayoutAlign="space-between center">
     <div style="margin-left: 0.8em;"><h2>Total Sum : {{totalSum | currency:'USD'}}</h2></div>
-    <div ><button style="margin-right: 2em;" type="button" class="btn btn-secondary align-right" (click)="placeOrder()">Checkout <i
+    <div ><button style="margin-right: 2em;" type="button" class="btn btn-secondary align-right" (click)="placeOrder()" [disabled]="cartlist.length == 0">Place Order<i
           class="fa fa-angle-right"></i></button></div>
 
   </div>

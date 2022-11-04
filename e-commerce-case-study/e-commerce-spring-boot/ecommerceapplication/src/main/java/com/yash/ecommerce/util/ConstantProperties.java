@@ -11,7 +11,8 @@ public class ConstantProperties {
 
 	public static final String BAD_REQUEST_CODE = "400";
 	public static final String BAD_REQUEST_MESSAGE = "BAD_REQUEST";
-    
+	public static final String INVALID_CREDENTIAL = "INVALID CREDENTIAL";
+	
 	public static final String CONFLICT = "409";
 	
 	public static final String ADD_SUCCESS_MESSAGE = "ADD_PRO";

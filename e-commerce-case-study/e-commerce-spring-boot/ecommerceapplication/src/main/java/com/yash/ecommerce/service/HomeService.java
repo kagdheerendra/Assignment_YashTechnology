@@ -6,6 +6,8 @@ import java.util.Optional;
 
 import javax.transaction.Transactional;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -13,6 +15,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
+import com.yash.ecommerce.controller.HomeController;
 import com.yash.ecommerce.entity.Authorities;
 import com.yash.ecommerce.entity.User;
 import com.yash.ecommerce.exception.UserCustomException;
@@ -25,6 +28,8 @@ import com.yash.ecommerce.util.Validator;
 @Service
 public class HomeService {
 
+	private static final Logger logger = LogManager.getLogger(HomeService.class);
+	
 	@Autowired
 	private AuthenticationManager authenticationManager;
 	
@@ -41,6 +46,7 @@ public class HomeService {
 		ServerResponse resp = new ServerResponse();
 		final String email = credential.get(ConstantProperties.USER_EMAIL);
 		final String password = credential.get(ConstantProperties.USER_PASSWORD);
+		logger.debug("inside generateToken method of homeService {}", email, password);
 		if (!Validator.isValidEmail(email)) {
 			resp.setStatus(ConstantProperties.BAD_REQUEST_CODE);
 			resp.setMessage(ConstantProperties.INVALID_EMAIL_FAIL_MSG);
@@ -51,7 +57,10 @@ public class HomeService {
 			try {
 				authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(email, password));
 			} catch (BadCredentialsException e) {
-				throw new UserCustomException("Invalid User Credentials");
+				resp.setStatus(ConstantProperties.BAD_REQUEST_CODE);
+				resp.setMessage(ConstantProperties.INVALID_CREDENTIAL);
+				return resp;
+				//throw new UserCustomException("Invalid User Credentials");
 			}
 			final UserDetails userDetails = userDetailService.loadUserByUsername(email);
 			final String jwt = jwtutil.generateToken(userDetails);
@@ -73,6 +82,7 @@ public class HomeService {
 	
 	@Transactional
 	public ServerResponse addUser(User user) throws UserCustomException {
+		logger.info("inside adduser method of homeservice {}", user);
 		ServerResponse resp = new ServerResponse();
 		if (Validator.isUserEmpty(user)) {
 			resp.setStatus(ConstantProperties.BAD_REQUEST_CODE);
@@ -102,7 +112,6 @@ public class HomeService {
 					if (op.isPresent()) {
 						resp.setStatus(ConstantProperties.SUCCESS_CODE);
 						resp.setMessage(ConstantProperties.CUST_REG);
-						System.out.println(op.get().toString());
 						resp.setUserType(op.get().getUserType());
 					}
 				} catch (Exception e) {

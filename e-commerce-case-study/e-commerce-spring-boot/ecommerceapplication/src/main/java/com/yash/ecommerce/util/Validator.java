@@ -14,6 +14,9 @@ public class Validator {
 		if (user.getUserName() == null || user.getUserName() == "") {
 			return true;
 		}
+		if(user.getUserType() == null || user.getUserType() == "") {
+			return true;
+		}
 		return false;
 	}
 	

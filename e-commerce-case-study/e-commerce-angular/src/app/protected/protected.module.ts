@@ -14,13 +14,14 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import {MatToolbarModule} from '@angular/material/toolbar';
 import { MatInputModule } from '@angular/material/input';
 import { MatCardModule } from '@angular/material/card';
-import {MatProgressSpinnerModule} from '@angular/material/progress-spinner'
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import { ProductDialogComponent } from './components/product-dialog/product-dialog.component';
 import { OrderItemComponent } from './components/order-item/order-item.component';
 import { CartItemComponent } from './components/cart-item/cart-item.component';
 import { AddressDialogComponent } from './components/address-dialog/address-dialog.component';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthInterceptor } from '../auth-guard/AuthInterceptor';
+import { BuynowComponent } from './components/buynow/buynow.component';
 
 
 @NgModule({
@@ -30,7 +31,8 @@ import { AuthInterceptor } from '../auth-guard/AuthInterceptor';
     ProductDialogComponent,
     OrderItemComponent,
     CartItemComponent,
-    AddressDialogComponent
+    AddressDialogComponent,
+    BuynowComponent
   ],
   imports: [
     CommonModule,

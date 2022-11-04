@@ -4,6 +4,7 @@ import { tap } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { ApiService } from 'src/app/services/api.service';
 //import { AuthService } from '../../services/auth-service/auth.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-login',
@@ -24,6 +25,7 @@ export class LoginComponent {
     //private authService: AuthService,
     private router: Router,
     private apiService: ApiService,
+    private snackbar: MatSnackBar
   ) { }
 
   login() {
@@ -47,6 +49,9 @@ export class LoginComponent {
         }
       },
         err => {
+          this.snackbar.open(err.error.message, 'Close', {
+            duration: 2000, horizontalPosition: 'right', verticalPosition: 'top'
+          })
           this.router.navigate(['/login']);
       });
   }

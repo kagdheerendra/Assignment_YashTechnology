@@ -1,0 +1,54 @@
+<span>
+    <p>
+        <mat-toolbar color="primary" style="height: 50px;background-color: #343a40!important;">
+            <span>Buy Product</span>
+        </mat-toolbar>
+    </p>
+</span>
+<mat-dialog-content>
+    <form class="form-horizontal shadow p-3 mb-5 bg-white rounded " #f="ngForm">
+        <div class="row">
+            <div class="col-6">
+                <div class="form-group">
+                    <mat-label style="padding: 8px;font-family: Arial;font-size: smaller;">Product Name</mat-label>
+                    <input type="text" class="form-control" placeholder="Product Name" #prodname
+                    ngModel name="prodname" [(ngModel)]="product.productName" [maxLength]="100" readonly>
+                </div>
+                <div class="form-group">
+                    <mat-label style="padding: 8px;font-family: Arial;font-size: smaller;">Product Description</mat-label>
+                    <textarea type="text" class="form-control" placeholder="description" rows="5" name="desc"
+                    #desc ngModel [(ngModel)]="product.description" [maxLength]="250" readonly></textarea>
+                </div>
+                <div class="form-group">
+                    <mat-label style="padding: 8px;font-family: Arial;font-size: smaller;">Product Quantity</mat-label>
+                    <input type="number" class="form-control" placeholder="quantity" name="quan" #quan
+                    ngModel [ngModel]="product.quantity" (ngModelChange)="onQuantityChange($event)">
+                </div>
+                <div class="form-group">
+                    <mat-label style="padding: 8px;font-family: Arial;font-size: smaller;">Product Price</mat-label>
+                    <input type="text" class="form-control" placeholder="price" #price name="price"
+                    ngModel [(ngModel)]="product.price" readonly>
+                </div>
+                <div style="margin-left: 0.8em;"><h2>Total Sum : {{totalSum | currency:'USD'}}</h2></div>
+            </div>
+            <div class="col-6">
+                <h4 class="text-center">Image preview</h4>
+                <img [src]="imageUrl" style="width:300px;height: 300px;">
+
+            </div>
+
+        </div>
+    </form>
+
+</mat-dialog-content>
+
+<mat-dialog-actions style="display: list-item;min-height: 40px;">
+    <div fxLayout="row" fxLayoutAlign="space-between center">
+        <div>
+            <button class="mat-raised-button" (click)="close()">Close</button>
+        </div>
+        <div>
+            <button class="mybtn btn btn-secondary" (click)="f.form.valid && buyNow(desc,quan,price,prodname)">Place order</button>
+        </div>
+    </div>
+</mat-dialog-actions>

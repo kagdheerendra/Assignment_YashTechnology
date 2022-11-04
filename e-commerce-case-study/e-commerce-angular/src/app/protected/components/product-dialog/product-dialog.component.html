@@ -1,54 +1,68 @@
-<span>
-    <p>
-        <mat-toolbar color="primary" style="height: 50px;background-color: #343a40!important;">
-            <span>Add Product</span>
-            <span class="example-spacer"></span>
-        </mat-toolbar>
-    </p>
-</span>
+<mat-toolbar color="primary" style="height: 50px;background-color: #343a40!important;">
+    <span *ngIf="mode === 'add'">Add Product</span>
+    <span *ngIf="mode === 'edit'">Update Product</span>
+    <span class="example-spacer"></span>
+</mat-toolbar>
 <mat-dialog-content>
-    <form class="form-horizontal shadow p-3 mb-5 bg-white rounded " #f="ngForm" >
+    <form class="form-horizontal shadow p-3 mb-5 bg-white rounded " [formGroup]="productForm">
         <div class="row">
             <div class="col-6">
                 <div class="form-group">
-                    <input type="text" class="form-control" placeholder="Product Name" #prodname
-                    ngModel name="prodname">
+                    <div class="col-m-10">
+                        <mat-form-field style="width: 312px;">
+                            <input type="text" matInput placeholder="Product Name" formControlName="productName" />
+                        </mat-form-field>
+                    </div>
                 </div>
                 <div class="form-group">
-                    <textarea type="text" class="form-control" placeholder="description" rows="5" name="desc"
-                    #desc ngModel></textarea>
+                    <div class="col-m-10">
+                        <mat-form-field style="width: 312px;">
+                            <textarea matInput placeholder="Description" formControlName="description"></textarea>
+                        </mat-form-field>
+                    </div>
                 </div>
                 <div class="form-group">
-                    <input type="text" class="form-control" placeholder="quantity" name="quan" #quan
-                    ngModel>
+                    <div class="col-m-10">
+                        <mat-form-field style="width: 312px;">
+                            <input type="number" matInput placeholder="Quantity" formControlName="quantity" />
+                            <mat-error
+                            *ngIf="this.productForm.get('quantity')?.touched && this.productForm.get('quantity')?.hasError('pattern')">
+                               only integer value allowed
+                            </mat-error>
+                        </mat-form-field>
+                    </div>
                 </div>
                 <div class="form-group">
-                    <input type="text" class="form-control" placeholder="price" #price name="price"
-                    ngModel>
+                    <div class="col-m-10">
+                        <mat-form-field style="width: 312px;">
+                            <input type="number" matInput placeholder="Price" formControlName="price" />
+                        </mat-form-field>
+                    </div>
                 </div>
                 <div class="form-group">
-                    <input style="height: 2.5em;" type="file" class="form-control" placeholder="Product Picture" #image
-                    accept="image/*" name="image" (change)="handleFileInput($event)">
+                    <div class="col-m-10">
+                        <input style="height: 2.5em;" type="file" class="form-control" placeholder="Product Picture"
+                            #image accept="image/*" name="image" (change)="handleFileInput($event)" />
+                    </div>
                 </div>
             </div>
             <div class="col-6">
                 <h4 class="text-center">Image preview</h4>
                 <img [src]="imageUrl" style="width:300px;height: 300px;">
-
             </div>
-
         </div>
     </form>
-
 </mat-dialog-content>
-
 <mat-dialog-actions style="display: list-item;min-height: 40px;">
     <div fxLayout="row" fxLayoutAlign="space-between center">
         <div>
-            <button class="mat-raised-button" (click)="close()">Close</button>
+            <button mat-button mat-dialog-close (click)="close()">Close</button>
         </div>
         <div>
-            <button class="mybtn btn btn-secondary" (click)="f.form.valid && addProd(desc,quan,price,prodname,image)">Add</button>
+            <button *ngIf="mode === 'add'" [disabled]="productForm.invalid"
+                mat-raised-button color="accent" (click)="addProd()">Add</button>
+            <button *ngIf="mode === 'edit'" [disabled]="productForm.invalid"
+                mat-raised-button color="accent" (click)="updateProd()">Update</button>
         </div>
     </div>
 </mat-dialog-actions>

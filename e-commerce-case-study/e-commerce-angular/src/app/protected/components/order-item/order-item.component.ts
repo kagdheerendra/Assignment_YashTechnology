@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { ApiService } from 'src/app/services/api.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
 //import { ApiService } from 'src/app/Service/api.service';
 
 @Component({
@@ -9,60 +11,55 @@ import { Router } from '@angular/router';
 })
 export class OrderItemComponent implements OnInit {
 
-  //auth: string;
-  orderlist: any[] = [
-    {
-        "orderId": 1,
-        "orderBy": "abc@gmail.com",
-        "orderStatus": "Approved",
-        "products": []
-    },
-    {
-        "orderId": 2,
-        "orderBy": "abc@gmail.com",
-        "orderStatus": "PENDING",
-        "products": []
-    },
-    {
-        "orderId": 3,
-        "orderBy": "abc@gmail.com",
-        "orderStatus": "PENDING",
-        "products": []
-    }
-];
+  orderlist: any[] = [];
   constructor(private route: Router, 
-    //private api: ApiService
+    private api: ApiService,
+    private snackbar: MatSnackBar,
     ) { }
 
   ngOnInit() {
-    //this.auth = this.api.getToken();
-    this.getOrderList();
+    if (this.api.isAuthenticated()) {
+      this.getOrderList();
+    }
   }
 
   approve(orderid:any) {
     let order = {
       "orderId": orderid,
-      "orderStatus": "Approved"
+      "orderStatus": "APPROVED"
     }
-    // this.api.updateStatusForOrder( order).subscribe(res => {
-    //   this.getOrderList();
-    // });
+    this.api.updateStatusForOrder( order).subscribe(res => {
+      if(res.status === '200'){
+        this.snackbar.open(`Approved successfully`, 'Close', {
+          duration: 2000, horizontalPosition: 'right', verticalPosition: 'top'
+        })
+        this.getOrderList();
+      }
+      
+    });
   }
 
   decline(orderid:any) {
     let order = {
       "orderId": orderid,
-      "orderStatus": "Declined"
+      "orderStatus": "DECLINED"
     }
-    // this.api.updateStatusForOrder(order).subscribe(res => {
-    //   this.getOrderList();
-    // });
+    this.api.updateStatusForOrder(order).subscribe(res => {
+      if(res.status === '200'){
+        this.snackbar.open(`Approved successfully`, 'Close', {
+          duration: 2000, horizontalPosition: 'right', verticalPosition: 'top'
+        })
+        this.getOrderList();
+      }
+    });
   }
 
   getOrderList() {
-    // this.api.getOrders().subscribe(res => {
-    //   this.orderlist = res.orderlist;
-    // });
+    this.api.getOrders().subscribe(res => {
+      if(res.status === "200"){
+        this.orderlist = res.orderlist;
+      }
+    });
   }
 
 }

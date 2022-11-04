@@ -3,11 +3,15 @@ package com.yash.ecommerce.entity;
 import java.io.Serializable;
 import java.util.Date;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+
+import org.hibernate.annotations.Type;
+import org.springframework.lang.Nullable;
 
 @Entity
 @Table(name = "bufcart")
@@ -18,32 +22,47 @@ public class Bufcart implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int bufcartId;
+	@Column(name = "order_id", nullable = true)
+	private int orderId;
 	private String email;
 	private Date dateAdded;
 	private int quantity;
 	private double price;
 	private int productId;
 	private String productName;
+	@Column(nullable = false)
+	@Type(type = "org.hibernate.type.NumericBooleanType")
+	private boolean accessByCart = true;
 
 	public Bufcart() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
-	public Bufcart(int bufcartId, String email, Date dateAdded, int quantity, double price, int productId,
-			String productName) {
+	public Bufcart(int bufcartId, int orderId, String email, Date dateAdded, int quantity, double price, int productId,
+			String productName, boolean accessByCart) {
 		super();
 		this.bufcartId = bufcartId;
+		this.orderId = orderId;
 		this.email = email;
 		this.dateAdded = dateAdded;
 		this.quantity = quantity;
 		this.price = price;
 		this.productId = productId;
 		this.productName = productName;
+		this.accessByCart = accessByCart;
 	}
 
 	public int getBufcartId() {
 		return bufcartId;
+	}
+
+	public int getOrderId() {
+		return orderId;
+	}
+
+	public void setOrderId(int orderId) {
+		this.orderId = orderId;
 	}
 
 	public void setBufcartId(int bufcartId) {
@@ -98,14 +117,23 @@ public class Bufcart implements Serializable {
 		this.productName = productName;
 	}
 
+	public boolean isAccessByCart() {
+		return accessByCart;
+	}
+
+	public void setAccessByCart(boolean accessByCart) {
+		this.accessByCart = accessByCart;
+	}
+
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
 
 	@Override
 	public String toString() {
-		return "Bufcart [bufcartId=" + bufcartId + ", email=" + email + ", dateAdded=" + dateAdded + ", quantity="
-				+ quantity + ", price=" + price + ", productId=" + productId + ", productName=" + productName + "]";
+		return "Bufcart [bufcartId=" + bufcartId + ", orderId=" + orderId + ", email=" + email + ", dateAdded="
+				+ dateAdded + ", quantity=" + quantity + ", price=" + price + ", productId=" + productId
+				+ ", productName=" + productName + ", accessByCart=" + accessByCart + "]";
 	}
 
 }

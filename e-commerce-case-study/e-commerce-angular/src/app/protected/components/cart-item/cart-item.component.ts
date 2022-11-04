@@ -27,13 +27,23 @@ export class CartItemComponent implements OnInit {
   }
 
   ngOnInit() {
-   this.api.getCartItems().subscribe((res: { oblist: any[]; }) => {
-       this.cartlist = res.oblist;
-      this.cartlist.forEach(value => {
-        this.totalSum = this.totalSum + (value.quantity * value.price);
-      });
-      this.showLoader = false;
-    });
+    if(this.api.isAuthenticated()){
+      this.api.getCartItems().subscribe((res: { oblist: any[]; }) => {
+        let oblist = res.oblist;
+        oblist.forEach(item =>{
+           if(item.orderId == 0 && item.accessByCart){
+            this.cartlist.push(item);
+           }
+        });
+       //this.cartlist = res.oblist;
+       if(this.cartlist.length > 0){
+        this.cartlist.forEach(value => {
+          this.totalSum = this.totalSum + (value.quantity * value.price);
+        });
+       }
+       this.showLoader = false;
+     });
+    }
   }
   updateCart(id: any, quantity: any) {
     this.showLoader = true;
@@ -73,7 +83,14 @@ export class CartItemComponent implements OnInit {
     dialogConfig.height = '510px';
     const dialogRef = this.dialog.open(AddressDialogComponent, dialogConfig);
     dialogRef.afterClosed().subscribe(
-      data => console.log("Dialog output:", data)
+      data => {
+      if(data === 'save'){
+        this.api.placeOrder().subscribe((res: any) => {
+          console.log(res);
+          this.route.navigate(['/protected/home']);
+        });
+      }
+      }
   );
   }
 }

@@ -51,6 +51,9 @@ export class NavigationComponent implements OnInit {
     dialogConfig.disableClose = true;
     dialogConfig.autoFocus = true;
     dialogConfig.panelClass='custom-dialog-container';
+    dialogConfig.data = {
+      'mode' : 'add'
+    }
     const dialogRef = this.dialog.open(ProductDialogComponent, dialogConfig);
     dialogRef.afterClosed().subscribe(
       data => {

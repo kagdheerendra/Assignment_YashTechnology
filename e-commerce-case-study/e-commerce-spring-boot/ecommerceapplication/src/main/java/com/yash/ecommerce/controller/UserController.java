@@ -2,8 +2,9 @@ package com.yash.ecommerce.controller;
 
 import java.io.IOException;
 import java.util.HashMap;
-import java.util.logging.Logger;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,8 +19,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.yash.ecommerce.EcommerceApplication;
 import com.yash.ecommerce.entity.Address;
+import com.yash.ecommerce.entity.Product;
 import com.yash.ecommerce.exception.CartCustomException;
+import com.yash.ecommerce.exception.ProductCustomException;
 import com.yash.ecommerce.model.CartResponse;
 import com.yash.ecommerce.model.ProductResponse;
 import com.yash.ecommerce.model.Response;
@@ -33,15 +37,22 @@ import com.yash.ecommerce.util.Validator;
 @RestController
 @RequestMapping("/user")
 public class UserController {
-
-	private static Logger logger = Logger.getLogger(UserController.class.getName());
+    
+	private static final Logger logger = LogManager.getLogger(UserController.class);
 	
 	@Autowired
 	private UserService userService;
 	
 	@GetMapping("/getProducts")
 	public ResponseEntity<ProductResponse> getProducts(Authentication auth) throws IOException {
-		ProductResponse resp = userService.getProducts();
+		logger.debug("authentication token {}"+auth.toString());
+		ProductResponse resp = null;
+		try {
+			resp = userService.getProducts();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		return new ResponseEntity<ProductResponse>(resp, HttpStatus.OK);
 	}
 
@@ -71,7 +82,7 @@ public class UserController {
 		CartResponse resp = new CartResponse();
 		try {
 			resp = userService.viewCart(auth);
-		} catch (IOException e) {
+		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
@@ -98,7 +109,13 @@ public class UserController {
 	public ResponseEntity<CartResponse> delCart(@RequestParam(name = ConstantProperties.BUF_ID) String bufcartid,
 			Authentication auth) throws IOException {
 
-		CartResponse resp = userService.delCart(bufcartid, auth);
+		CartResponse resp = null;
+		try {
+			resp = userService.delCart(bufcartid, auth);
+		} catch (IOException | CartCustomException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		HttpStatus https = HttpStatus.OK;
 		if(resp.getStatus().equals("500")) {
 			https = HttpStatus.INTERNAL_SERVER_ERROR;
@@ -138,4 +155,24 @@ public class UserController {
 		}
 		return new ResponseEntity<Response>(resp, HttpStatus.OK);
 	}
+	
+	@PostMapping("/buyNow")
+	public ResponseEntity<ServerResponse> buyNow(@RequestBody Product product,
+			Authentication auth) throws IOException {
+
+		ServerResponse resp = new ServerResponse();
+		try {
+			resp = userService.buyNow(product, auth);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		HttpStatus https = HttpStatus.INTERNAL_SERVER_ERROR;
+		if(resp.getStatus().equals("200")) {
+			https = HttpStatus.OK;
+		}
+		return new ResponseEntity<ServerResponse>(resp, https);
+	}
+
+
 }

@@ -9,35 +9,53 @@
 <!-- <mat-dialog-content fxLayout="row" fxLayoutAlign="space-between center"> -->
   <mat-card>
   <mat-card-content>
-    <form [formGroup]="registerForm" (ngSubmit)="register()">
+    <form [formGroup]="addressForm" (ngSubmit)="save()">
         <div>
         <mat-form-field>
           <input type="text" matInput placeholder="Address" formControlName="address">
+          <mat-error *ngIf="this.addressForm.get('address')?.touched && this.addressForm.get('address')?.hasError('required')">
+            address is required</mat-error>
         </mat-form-field>
     </div>
     <div>
         <mat-form-field>
           <input type="text" matInput placeholder="City" formControlName="city">
+          <mat-error *ngIf="this.addressForm.get('city')?.touched && this.addressForm.get('city')?.hasError('required')">
+            city is required</mat-error>
         </mat-form-field>
     </div>
     <div>
         <mat-form-field>
           <input type="text" matInput placeholder="State" formControlName="state">
+          <mat-error *ngIf="this.addressForm.get('state')?.touched && this.addressForm.get('state')?.hasError('required')">
+            state is required</mat-error>
         </mat-form-field>
     </div>
     <div>
         <mat-form-field>
           <input type="text" matInput placeholder="Country" formControlName="country">
+          <mat-error *ngIf="this.addressForm.get('country')?.touched && this.addressForm.get('country')?.hasError('required')">
+            country is required</mat-error>
         </mat-form-field>
     </div>
     <div>
         <mat-form-field>
-          <input type="text" matInput placeholder="Zipcode" formControlName="zipcode">
+          <input type="number" matInput placeholder="Zipcode" formControlName="zipcode">
+          <mat-error *ngIf="this.addressForm.get('zipcode')?.touched && this.addressForm.get('zipcode')?.hasError('required')">
+            zipcode is required</mat-error>
+            <mat-error *ngIf="this.addressForm.get('zipcode')?.touched && this.addressForm.get('zipcode')?.hasError('minlength')">
+              zipcode minlength must be 5</mat-error>
+              <mat-error *ngIf="this.addressForm.get('zipcode')?.touched && this.addressForm.get('zipcode')?.hasError('maxlength')">
+                zipcode maxlength must be 5</mat-error>
         </mat-form-field>
     </div>
     <div>
         <mat-form-field>
-          <input type="text" matInput placeholder="Phone Number" formControlName="phoneNumber">
+          <input type="number" matInput placeholder="Phone Number" formControlName="phoneNumber">
+          <mat-error *ngIf="this.addressForm.get('phoneNumber')?.touched && this.addressForm.get('phoneNumber')?.hasError('required')">
+            phoneNumber is required</mat-error>
+          <mat-error *ngIf="this.addressForm.get('phoneNumber')?.touched && this.addressForm.get('phoneNumber')?.hasError('pattern')">
+            phoneNumber must be a valid</mat-error>
         </mat-form-field>
     </div>
       </form>
@@ -50,8 +68,11 @@
         <div>
             <button class="mat-raised-button" (click)="close()">Close</button>
         </div>
-        <div>
-          <button mat-button class="mybtn btn btn-secondary" mat-button [disabled]="!registerForm.valid">Save</button>
+        <div *ngIf="!isAddPresent">
+          <button mat-button class="mybtn btn btn-secondary" (click)="save()" [disabled]="!addressForm.valid">Save</button>
+        </div>
+        <div *ngIf="isAddPresent">
+          <button mat-button class="mybtn btn btn-secondary" (click)="save()" [disabled]="!addressForm.valid">Update</button>
         </div>
     </div>
 </mat-dialog-actions>
