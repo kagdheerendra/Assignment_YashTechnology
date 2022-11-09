@@ -34,6 +34,11 @@ import com.yash.ecommerce.service.MyUserDetailService;
 import com.yash.ecommerce.util.ConstantProperties;
 import com.yash.ecommerce.util.JwtUtil;
 
+/**
+ * this will responsible to handle and generate the response for the login and registration call.
+ * @author dheerendra.kag
+ *
+ */
 @CrossOrigin()
 @RestController
 @RequestMapping("/home")
@@ -41,9 +46,17 @@ public class HomeController {
 
 	private static final Logger logger = LogManager.getLogger(HomeController.class);
 	
+	/**
+	 * this will inject the service dependency for the controller.
+	 */
 	@Autowired
 	private HomeService service;
 
+	/**
+	 * this will take the credential(userName, password) and generate the token for the login user.
+	 * @param credential this will hold the userName and password of the user.
+	 * @return will return the generated token inside of ServerResponse object.
+	 */
 	@PostMapping("/auth")
 	public ResponseEntity<ServerResponse> createAuthToken(@RequestBody HashMap<String, String> credential) {
 		logger.debug("inside createAuthToken method of HomeController {}", credential);
@@ -62,6 +75,12 @@ public class HomeController {
  		return new ResponseEntity<ServerResponse>(resp, https);
 	}
 	
+	/**
+	 * this will register the new user.
+	 * @param user this will hold the new user info.
+	 * @return will return response of the registered user.
+	 * @throws UserCustomException generate the user custom exception
+	 */
 	@PostMapping("/signup")
 	public ResponseEntity<ServerResponse> addUser(@RequestBody User user) throws UserCustomException {
 		logger.info("inside adduser method of HomeController {}", user);
@@ -75,6 +94,11 @@ public class HomeController {
 		return new ResponseEntity<ServerResponse>(resp, https);
 	}
 	
+	/**
+	 * this will clear the current user session and remove the token.
+	 * @param request hold the request coming from the client.
+	 * @param response return the response to client.
+	 */
 	@GetMapping(value = "/logout")
 	public void logoutPage(HttpServletRequest request, HttpServletResponse response) {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();

@@ -26,6 +26,11 @@ import com.yash.ecommerce.service.AdminService;
 import com.yash.ecommerce.util.ConstantProperties;
 import com.yash.ecommerce.util.Validator;
 
+/**
+ * this will responsible to add,delete,update or approve the product.
+ * @author dheerendra.kag
+ *
+ */
 @CrossOrigin()
 @RestController
 @RequestMapping("/admin")
@@ -33,9 +38,23 @@ public class AdminController {
 
 	private static final Logger logger = LogManager.getLogger(AdminController.class);
 	
+	/**
+	 * will inject the service dependency into controller.
+	 */
 	@Autowired
 	private AdminService adminService;
 	
+	/**
+	 * will add the new product into product list.
+	 * @param prodImage hold the current product image.
+	 * @param description hold the current product description.
+	 * @param price hold the current product price.
+	 * @param productName hold the current product name.
+	 * @param quantity hold the current product quantity.
+	 * @return product response.
+	 * @throws IOException 
+	 * @throws ProductCustomException will generate the custom product exception.
+	 */
 	@PostMapping("/addProduct")
 	public ResponseEntity<ProductResponse> addProduct(
 			@RequestParam(name = ConstantProperties.PROD_FILE, required = false) MultipartFile prodImage,
@@ -52,6 +71,17 @@ public class AdminController {
         return new ResponseEntity<ProductResponse>(resp, HttpStatus.OK);
 	}
 	
+	/**
+	 * will update the product.
+	 * @param prodImage hold the current product image.
+	 * @param description hold the current product description.
+	 * @param price hold the current product price.
+	 * @param productName hold the current product name.
+	 * @param quantity hold the current product quantity.
+	 * @param productid hold the updated product id.
+	 * @return server response.
+	 * @throws IOException
+	 */
 	@PutMapping("/updateProducts")
 	public ResponseEntity<ServerResponse> updateProducts(
 			@RequestParam(name = ConstantProperties.PROD_FILE, required = false) MultipartFile prodImage,
@@ -70,6 +100,12 @@ public class AdminController {
 		return new ResponseEntity<ServerResponse>(resp, https);
 	}
 	
+	/**
+	 * will delete the product.
+	 * @param productid hold the product id which is going to be deleted.
+	 * @return product response.
+	 * @throws IOException
+	 */
 	@DeleteMapping("/delProduct")
 	public ResponseEntity<ProductResponse> delProduct(@RequestParam(name = ConstantProperties.PROD_ID) String productid)
 			throws IOException {
@@ -83,6 +119,12 @@ public class AdminController {
         return new ResponseEntity<ProductResponse>(resp, https);
 	}
 	
+	/**
+	 * will return the product info by product id.
+	 * @param productid hold the requested productId.
+	 * @return product entity response.
+	 * @throws IOException
+	 */
 	@GetMapping("/findProductById")
 	public ResponseEntity<ProductResponse> findProductById(@RequestParam(name = ConstantProperties.PROD_ID) String productid) throws IOException{
 		ProductResponse resp = adminService.findProductById(productid);
@@ -95,6 +137,11 @@ public class AdminController {
         return new ResponseEntity<ProductResponse>(resp, https);
 	}
 	
+	/**
+	 * will return the list of all order item.
+	 * @return list of all order item.
+	 * @throws IOException
+	 */
 	@GetMapping("/viewOrders")
 	public ResponseEntity<ViewOrderResponse> viewOrders() throws IOException {
 
@@ -112,6 +159,13 @@ public class AdminController {
 		return new ResponseEntity<ViewOrderResponse>(resp, https);
 	}
 	
+	/**
+	 * will approve or decline the order.
+	 * @param orderId hold the requested order id.
+	 * @param orderStatus hold the order status.
+	 * @return server response.
+	 * @throws IOException
+	 */
 	@PostMapping("/updateOrder")
 	public ResponseEntity<ServerResponse> updateOrders(@RequestParam(name = ConstantProperties.ORD_ID) String orderId,
 			@RequestParam(name = ConstantProperties.ORD_STATUS) String orderStatus) throws IOException {

@@ -12,6 +12,11 @@ import com.yash.ecommerce.entity.User;
 import com.yash.ecommerce.repository.UserRepository;
 import com.yash.ecommerce.util.Validator;
 
+/**
+ * will fetch the user info from database to authenticate the user.
+ * @author dheerendra.kag
+ *
+ */
 @Service
 public class MyUserDetailService implements UserDetailsService {
 

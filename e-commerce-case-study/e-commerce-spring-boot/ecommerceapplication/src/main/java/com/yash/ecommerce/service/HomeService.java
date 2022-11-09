@@ -25,6 +25,11 @@ import com.yash.ecommerce.util.ConstantProperties;
 import com.yash.ecommerce.util.JwtUtil;
 import com.yash.ecommerce.util.Validator;
 
+/**
+ * this will responsible to check the authentication, communicate with the database and map the result with entity classes.
+ * @author dheerendra.kag
+ *
+ */
 @Service
 public class HomeService {
 
@@ -43,6 +48,7 @@ public class HomeService {
 	private JwtUtil jwtutil;
 	
 	public ServerResponse generateToken(HashMap<String, String> credential) throws UserCustomException {
+		logger.debug("inside generateToken method of HomeService {}", credential);
 		ServerResponse resp = new ServerResponse();
 		final String email = credential.get(ConstantProperties.USER_EMAIL);
 		final String password = credential.get(ConstantProperties.USER_PASSWORD);

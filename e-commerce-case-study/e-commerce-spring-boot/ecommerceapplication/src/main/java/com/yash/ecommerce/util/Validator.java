@@ -3,6 +3,11 @@ package com.yash.ecommerce.util;
 import com.yash.ecommerce.entity.Address;
 import com.yash.ecommerce.entity.User;
 
+/**
+ * validate the user property.
+ * @author dheerendra.kag
+ *
+ */
 public class Validator {
 	public static boolean isUserEmpty(User user) {
 		if (user.getPassword() == null || user.getPassword() == "") {

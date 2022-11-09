@@ -9,6 +9,11 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+/**
+ * this will responsible to hold the order for approval. 
+ * @author dheerendra.kag
+ *
+ */
 @Entity
 @Table(name = "placeOrder")
 public class PlaceOrder {
@@ -16,8 +21,17 @@ public class PlaceOrder {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int orderId;
 	private String email;
+	/**
+	 * this will hold the current orderStatus of the order.
+	 */
 	private String orderStatus;
+	/**
+	 * this will hold the orderDate.
+	 */
 	private Date orderDate;
+	/**
+	 * this will hold the totalCost for the order.
+	 */
 	private double totalCost;
 
 	public PlaceOrder() {

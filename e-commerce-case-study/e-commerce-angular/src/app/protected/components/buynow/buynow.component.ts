@@ -5,6 +5,8 @@ import { Product } from 'src/app/Model/product';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 import { ApiService } from 'src/app/services/api.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import {MatDialog, MatDialogConfig} from '@angular/material/dialog';
+import { AddressDialogComponent } from '../address-dialog/address-dialog.component';
 
 @Component({
   selector: 'app-buynow',
@@ -28,6 +30,7 @@ export class BuynowComponent implements OnInit {
   mode:string;
   totalSum : number = 0;
   constructor(
+    private dialog: MatDialog,
     private router: Router,
     private snackbar: MatSnackBar,
     private api: ApiService,
@@ -54,13 +57,38 @@ export class BuynowComponent implements OnInit {
 
   buyNow(desc:any, quan:any, price:any, prodname:any) {
     //this.product.quantity = quan;
-    this.api.buyNowProduct(this.product).subscribe(res => {
-      if(res.status == 200){
-        this.snackbar.open(`Product order placed successfully`, 'Close', {
-          duration: 2000, horizontalPosition: 'right', verticalPosition: 'top'
-        })
-        this.dialogRef.close("save");
+    // this.api.buyNowProduct(this.product).subscribe(res => {
+    //   if(res.status == 200){
+    //     this.snackbar.open(`Product order placed successfully`, 'Close', {
+    //       duration: 2000, horizontalPosition: 'right', verticalPosition: 'top'
+    //     })
+    //     this.dialogRef.close("save");
+    //   }
+    // });
+    this.openAddessDialog();
+  }
+
+  openAddessDialog(){
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.disableClose = true;
+    dialogConfig.autoFocus = true;
+    dialogConfig.panelClass='custom-dialog-container';
+    dialogConfig.width = '450px';
+    dialogConfig.height = '510px';
+    const dialogRef = this.dialog.open(AddressDialogComponent, dialogConfig);
+    dialogRef.afterClosed().subscribe(
+      data => {
+      if(data === 'save'){
+        this.api.buyNowProduct(this.product).subscribe(res => {
+          if(res.status == 200){
+            this.snackbar.open(`Product order placed successfully`, 'Close', {
+              duration: 2000, horizontalPosition: 'right', verticalPosition: 'top'
+            })
+            this.dialogRef.close("save");
+          }
+        });
       }
-    });
+      }
+  );
   }
 }

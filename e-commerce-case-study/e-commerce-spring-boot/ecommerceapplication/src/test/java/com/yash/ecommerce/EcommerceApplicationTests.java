@@ -3,11 +3,9 @@ package com.yash.ecommerce;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
-@SpringBootTest
-class EcommerceapplicationApplicationTests {
+@SpringBootTest(classes = EcommerceApplication.class)
+public class EcommerceApplicationTests {
 
 	@Test
-	void contextLoads() {
-	}
-
+	public void contextLoads() {}
 }

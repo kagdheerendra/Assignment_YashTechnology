@@ -1,5 +1,10 @@
 package com.yash.ecommerce.model;
 
+/**
+ * hold the generated server response.
+ * @author dheerendra.kag
+ *
+ */
 public class ServerResponse {
 	private String status;
 	private String message;

@@ -13,23 +13,52 @@ import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
+/**
+ * this entity class will responsible to hold the address of the user.
+ * @author dheerendra.kag
+ *
+ */
 @Entity
 @Table(name = "address")
 public class Address implements Serializable {
 
 	private static final long serialVersionUID = 4265352674204944987L;
 
+	/**
+	 * this will hold the current id of the address.
+	 */
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
+	/**
+	 * this wiil hold the current address of the address.
+	 */
 	private String address;
+	/**
+	 * this will hold the current city of the address.	
+	 */
 	private String city;
+	/**
+	 * this will hold the current state of the address.
+	 */
 	private String state;
+	/**
+	 * this will hold the current country of the address.
+	 */
 	private String country;
+	/**
+	 * this will hold the current zipCode of the address.
+	 */
 	private int zipcode;
+	/**
+	 * this will hold the current phone number of the address of the user.
+	 */
 	private String phonenumber;
 
+	/**
+	 * this will hold the current user information of the address.
+	 */
 	@OneToOne(fetch = FetchType.LAZY, optional = false)
 	@JoinColumn(name = "userid", nullable = false)
 	@JsonBackReference
@@ -40,6 +69,17 @@ public class Address implements Serializable {
 		// TODO Auto-generated constructor stub
 	}
 
+	/**
+	 * this construct the address with specified parameter.
+	 * @param id id of the address.
+	 * @param address address of the address. 
+	 * @param city city of the address.
+	 * @param state state of the address.
+	 * @param country country of the address.
+	 * @param zipcode zipCode of the address.
+	 * @param phonenumber phoneNumber of the user.
+	 * @param user current user of the address.
+	 */
 	public Address(Long id, String address, String city, String state, String country, int zipcode, String phonenumber,
 			User user) {
 		super();
@@ -53,10 +93,18 @@ public class Address implements Serializable {
 		this.user = user;
 	}
 
+	/**
+	 * this will return the current id of this address
+	 * @return this user's userId
+	 */
 	public Long getId() {
 		return id;
 	}
 
+	/**
+	 * this will set the id of the address
+	 * @param userId unique id of the address
+	 */
 	public void setId(Long id) {
 		this.id = id;
 	}

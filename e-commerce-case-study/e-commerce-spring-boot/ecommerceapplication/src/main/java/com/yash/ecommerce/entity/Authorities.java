@@ -10,6 +10,11 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+/**
+ * this entity class is responsible to hold the user roles.
+ * @author dheerendra.kag
+ *
+ */
 @Entity
 @Table(name = "authorities")
 public class Authorities implements Serializable {
@@ -18,10 +23,19 @@ public class Authorities implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int authorityId;
+	private int authorityId;  
+	/**
+	 * this will hold the current userName of user.
+	 */
 	private String userName;
+	/**
+	 * this will hold the current role of the user.
+	 */
 	private String authority;
 
+	/**
+	 * this will hold the current user for the authority.
+	 */
 	@ManyToOne
 	@JoinColumn(name = "userName", referencedColumnName = "userName", insertable = false, updatable = false)
 	private User user;
@@ -31,6 +45,13 @@ public class Authorities implements Serializable {
 		// TODO Auto-generated constructor stub
 	}
 
+	/**
+	 * this construct the authority with specified paramter.
+	 * @param authorityId id of the authority
+	 * @param userName name of the user.
+	 * @param authority role of the user.
+	 * @param user info of the user.
+	 */
 	public Authorities(int authorityId, String userName, String authority, User user) {
 		super();
 		this.authorityId = authorityId;

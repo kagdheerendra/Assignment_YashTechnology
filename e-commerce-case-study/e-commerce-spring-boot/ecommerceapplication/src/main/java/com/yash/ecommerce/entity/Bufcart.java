@@ -13,23 +13,55 @@ import javax.persistence.Table;
 import org.hibernate.annotations.Type;
 import org.springframework.lang.Nullable;
 
+/**
+ * this will responsible to hold the buffer cart information of the user.
+ * @author dheerendra.kag
+ *
+ */
 @Entity
 @Table(name = "bufcart")
 public class Bufcart implements Serializable {
 
 	private static final long serialVersionUID = 4049687597028261161L;
 
+	/**
+	 * this will hold the current cart id of the user.
+	 */
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int bufcartId;
+	/**
+	 * this will hold the current orderId of the user.
+	 */
 	@Column(name = "order_id", nullable = true)
 	private int orderId;
+	/**
+	 * this will hold the current email of the user.
+	 */
 	private String email;
+	/**
+	 * this will hold the creation date of the cart.
+	 */
 	private Date dateAdded;
+	/**
+	 * this will hold the current quantity of the product.
+	 */
 	private int quantity;
+	/**
+	 * this will hold the price of the product.
+	 */
 	private double price;
+	/**
+	 * will hold the productId of the product.
+	 */
 	private int productId;
+	/**
+	 * hold the name of the product.
+	 */
 	private String productName;
+	/**
+	 * this will hold the access permission of the cart
+	 */
 	@Column(nullable = false)
 	@Type(type = "org.hibernate.type.NumericBooleanType")
 	private boolean accessByCart = true;

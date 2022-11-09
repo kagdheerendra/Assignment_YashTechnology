@@ -1,5 +1,10 @@
 package com.yash.ecommerce.util;
 
+/**
+ * hold the all constant properties.
+ * @author dheerendra.kag
+ *
+ */
 public class ConstantProperties {
 
 	// Response

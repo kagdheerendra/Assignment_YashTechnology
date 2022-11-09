@@ -15,6 +15,11 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 
 import com.yash.ecommerce.service.MyUserDetailService;
 
+/**
+ * configure the spring security.
+ * @author dheerendra.kag
+ *
+ */
 @SuppressWarnings("deprecation")
 @Configuration
 @EnableWebSecurity

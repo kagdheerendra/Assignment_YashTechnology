@@ -4,6 +4,11 @@ import java.util.List;
 
 import com.yash.ecommerce.entity.Product;
 
+/**
+ * hold the current product response.
+ * @author dheerendra.kag
+ *
+ */
 public class ProductResponse {
 
 	private String status;

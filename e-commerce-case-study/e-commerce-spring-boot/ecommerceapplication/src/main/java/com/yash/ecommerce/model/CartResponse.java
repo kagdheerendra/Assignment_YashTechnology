@@ -4,6 +4,11 @@ import java.util.List;
 
 import com.yash.ecommerce.entity.Bufcart;
 
+/**
+ * hold the current cart response.
+ * @author dheerendra.kag
+ *
+ */
 public class CartResponse {
 	private String status;
 	private String message;

@@ -5,6 +5,11 @@ import java.util.List;
 
 import com.yash.ecommerce.entity.Bufcart;
 
+/**
+ * hold the current order response.
+ * @author dheerendra.kag
+ *
+ */
 public class Order {
 	private int orderId;
 	private String orderBy;

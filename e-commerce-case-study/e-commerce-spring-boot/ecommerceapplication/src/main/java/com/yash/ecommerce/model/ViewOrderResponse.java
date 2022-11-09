@@ -3,6 +3,11 @@ package com.yash.ecommerce.model;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * hold the order response.
+ * @author dheerendra.kag
+ *
+ */
 public class ViewOrderResponse {
 	private String status;
 	private String message;

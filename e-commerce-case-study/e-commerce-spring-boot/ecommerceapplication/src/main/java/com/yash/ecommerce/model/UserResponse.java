@@ -5,6 +5,11 @@ import java.io.Serializable;
 import com.yash.ecommerce.entity.Address;
 import com.yash.ecommerce.entity.User;
 
+/**
+ * hold the user response.
+ * @author dheerendra.kag
+ *
+ */
 public class UserResponse implements Serializable {
 
 	private static final long serialVersionUID = 1L;

@@ -9,7 +9,11 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import com.yash.ecommerce.entity.User;
-
+/**
+ * will hold the current login user detail for generate the jwt token.
+ * @author dheerendra.kag
+ *
+ */
 public class MyUserDetails implements UserDetails {
 
 	/**
