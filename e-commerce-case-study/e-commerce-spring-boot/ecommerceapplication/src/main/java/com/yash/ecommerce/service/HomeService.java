@@ -101,6 +101,7 @@ public class HomeService {
 			resp.setMessage(ConstantProperties.INVALID_PASSWORD_FAIL_MSG);
 		} else {
 			Optional<User> checkUser = userRepository.findByUserEmail(user.getEmail());
+			logger.info("findByUserEmail response inside adduser method of homeservice {}", checkUser);
 			if(checkUser.isPresent()) {
 				resp.setMessage(ConstantProperties.USER_EMAIL_ALREADY_EXISTS);
 				resp.setStatus(ConstantProperties.CONFLICT);

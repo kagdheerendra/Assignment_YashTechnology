@@ -98,7 +98,8 @@ public class UserService {
 
 			System.out.println(buf);
 			Bufcart bufcart = cartRepository.save(buf);
-            if(bufcart != null) {
+			logger.debug("save response inside addtocart method of userservice {}"+bufcart);
+			if(bufcart != null) {
     			resp.setStatus(ConstantProperties.SUCCESS_CODE);
     			resp.setMessage(ConstantProperties.CART_UPD_MESSAGE_CODE);            	
             }else {
@@ -145,6 +146,8 @@ public class UserService {
 		try {
 			User loggedUser = userRepository.findByUserName(auth.getName())
 					.orElseThrow(() -> new UserCustomException(auth.getName()));
+			logger.debug("cart object id is {}",Integer.parseInt(cart.get("id")));
+			logger.debug("loggerUser getEmail is {}",loggedUser.getEmail());
 			Bufcart selCart = cartRepository.findByBufcartIdAndEmail(Integer.parseInt(cart.get("id")), loggedUser.getEmail())
 					.orElseThrow(() -> new CartCustomException("Unable to find cart items, please try again"));
 			selCart.setQuantity(Integer.parseInt(cart.get("quantity")));
