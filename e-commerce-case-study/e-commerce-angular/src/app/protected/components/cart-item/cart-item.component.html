@@ -36,9 +36,12 @@
           </div>
         </div>
       </td>
-      <td>
+      <!-- <td>
         {{cart.quantity*cart.price | currency:'USD'}}
 
+      </td> -->
+      <td>
+        {{cart.subTotal | currency:'USD'}}
       </td>
       <td>
         <button class="btn btn-info btn-sm" (click)="deleteItem(prod)">Delete</button>

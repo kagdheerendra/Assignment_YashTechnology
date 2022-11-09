@@ -8,4 +8,5 @@ export interface Cart {
     price: number;
     productId: number;
     productName: string;
+    subTotal?:number;
 }
