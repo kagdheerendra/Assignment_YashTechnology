@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.transaction.Transactional;
 
 import org.apache.logging.log4j.LogManager;
@@ -28,6 +29,7 @@ import com.yash.ecommerce.util.Validator;
 import com.yash.ecommerce.controller.AdminController;
 import com.yash.ecommerce.entity.PlaceOrder;
 import com.yash.ecommerce.entity.Product;
+import com.yash.ecommerce.entity.User;
 import com.yash.ecommerce.exception.OrderCustomException;
 import com.yash.ecommerce.exception.ProductCustomException;
 
@@ -44,6 +46,9 @@ public class AdminService {
 
 	@Autowired
 	private CartRepository cartRepository;
+	
+	@Autowired
+	private SendMailService mailService;
 
 	@Transactional
 	public ProductResponse addProduct(MultipartFile prodImage, String productName, String description, String quantity,
@@ -187,8 +192,8 @@ public class AdminService {
 		return resp;
 	}
 
-	public ServerResponse updateOrders(@RequestParam(name = ConstantProperties.ORD_ID) String orderId,
-			@RequestParam(name = ConstantProperties.ORD_STATUS) String orderStatus) throws IOException {
+	public ServerResponse updateOrders(String orderId,
+			String orderStatus) throws IOException {
 
 		ServerResponse resp = new ServerResponse();
 		if (Validator.isStringEmpty(orderId) || Validator.isStringEmpty(orderStatus)) {
@@ -202,6 +207,9 @@ public class AdminService {
 				pc.setOrderStatus(orderStatus);
 				pc.setOrderDate(new java.util.Date(System.currentTimeMillis()));
 				ordRepository.save(pc);
+				User user = new User();
+				user.setEmail(pc.getEmail());
+				mailService.sendNotificationToUser(pc.getEmail(), orderStatus);
 				resp.setStatus(ConstantProperties.SUCCESS_CODE);
 				resp.setMessage(ConstantProperties.UPD_ORD_SUCCESS_MESSAGE);
 			} catch (Exception e) {

@@ -139,6 +139,11 @@ export class ApiService {
     buyNowProduct(prod : Product): Observable<any> {
       return this.http.post<Product>(environment.baseUrl + environment.buyNowUrl, prod);
     }
+
+    checkOrderStatusByProductIdUrl(prodid: number): Observable<any> {
+      return this.http.get<any>(environment.baseUrl + environment.checkOrderStatusByProductIdUrl + "?productId=" + prodid);
+    }
+
   // Authentication Methods 
 
   isAuthenticated(): boolean {

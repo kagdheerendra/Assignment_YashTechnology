@@ -117,7 +117,7 @@ public class HomeControllerDemoTest {
 			ObjectWriter ow = mapper.writer().withDefaultPrettyPrinter();
 			String requestJson = ow.writeValueAsString(user);
 			
-			when(homeService.addUser(any(User.class))).thenReturn(response);
+			//when(homeService.addUser(any(User.class))).thenReturn(response);
 			
 			MvcResult res = this.mockMvc.perform(
 					MockMvcRequestBuilders.post("/home/signup").contentType(MediaType.APPLICATION_JSON).content(requestJson))

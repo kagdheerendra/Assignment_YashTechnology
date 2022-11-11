@@ -41,11 +41,13 @@ export class LoginComponent {
         if (res.status == "200" && res.userType == "CUSTOMER") {
           this.apiService.storeToken(res.authToken, "customer");
           this.router.navigate(['../../protected/']);
-          //this.router.navigate(['/home']);
         } else if (res.status == "200" && res.userType == "ADMIN") {
           this.apiService.storeToken(res.authToken, "admin");
           this.router.navigate(['../../protected/']);
-          //this.router.navigate(['/admin']);
+        }else if(res.status == "401"){
+          this.snackbar.open("User is not verified", 'Close', {
+            duration: 2000, horizontalPosition: 'right', verticalPosition: 'top'
+          })
         }
       },
         err => {

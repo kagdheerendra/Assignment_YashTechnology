@@ -45,15 +45,15 @@ export class RegisterComponent {
     }
     this.apiService.register(user).
       subscribe(res => {
-        if (res.status == "400") {
-          this.snackbar.open(res.status, 'Close', {
-            duration: 2000, horizontalPosition: 'right', verticalPosition: 'top'
-          });
-        } else {
-          this.snackbar.open(`User created successfully`, 'Close', {
-            duration: 2000, horizontalPosition: 'right', verticalPosition: 'top'
+        if(res.status == "200"){
+          this.snackbar.open(`Registration is done please check your email and verify.`, 'Close', {
+            duration: 5000, horizontalPosition: 'right', verticalPosition: 'top'
           })
           this.router.navigate(['/login']);
+        }else {
+          this.snackbar.open(res.message, 'Close', {
+            duration: 2000, horizontalPosition: 'right', verticalPosition: 'top'
+          });
         }
       },
         err => {

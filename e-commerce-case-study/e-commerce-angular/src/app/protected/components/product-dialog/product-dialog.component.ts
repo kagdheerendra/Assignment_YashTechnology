@@ -27,7 +27,7 @@ export class ProductDialogComponent implements OnInit {
   mode:string;
 
   productForm = new FormGroup({
-    productName: new FormControl("", [Validators.required,  Validators.maxLength(100)]),
+    productName: new FormControl("", [Validators.required,  Validators.maxLength(50)]),
     description: new FormControl("", [Validators.required,  Validators.maxLength(250)]),
     quantity: new FormControl(null, [Validators.required, Validators.pattern("^-?[0-9][^\.]*$")]),
     price: new FormControl(null, [Validators.required])
@@ -40,6 +40,7 @@ export class ProductDialogComponent implements OnInit {
     private dialogRef: MatDialogRef<ProductDialogComponent>, @Inject(MAT_DIALOG_DATA) public data: any
   ) {
       this.mode = this.data.mode;
+      
    }
 
   ngOnInit(): void {

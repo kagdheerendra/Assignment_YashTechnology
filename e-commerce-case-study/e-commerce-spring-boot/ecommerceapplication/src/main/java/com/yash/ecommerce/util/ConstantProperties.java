@@ -10,13 +10,16 @@ public class ConstantProperties {
 	// Response
 	public static final String SUCCESS_CODE = "200";
 	public static final String SUCCESS_MESSAGE = "SUCCESS";
-
+	public static final String NOT_FOUND = "404";
 	public static final String FAILURE_CODE = "500";
 	public static final String FAILURE_MESSAGE = "INTERNAL SERVER ERROR";
 
 	public static final String BAD_REQUEST_CODE = "400";
 	public static final String BAD_REQUEST_MESSAGE = "BAD_REQUEST";
 	public static final String INVALID_CREDENTIAL = "INVALID CREDENTIAL";
+	
+	public static final String UNAUTHORIZED = "401";
+	public static final String NOT_VERIFIED = "USER_IS_NOT_VERIFIED";
 	
 	public static final String CONFLICT = "409";
 	

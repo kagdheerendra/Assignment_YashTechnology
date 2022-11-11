@@ -48,6 +48,7 @@ public class JwtRequestFilter extends OncePerRequestFilter {
 			throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		final String authorizationHeader = request.getHeader("Authorization");
+		logger.debug("inside jwtRequestFilter authorizationHeader {}"+authorizationHeader);
 		String username = null;
 		String jwt = null;
 		if (authorizationHeader != null && authorizationHeader.startsWith("Bearer ")) {

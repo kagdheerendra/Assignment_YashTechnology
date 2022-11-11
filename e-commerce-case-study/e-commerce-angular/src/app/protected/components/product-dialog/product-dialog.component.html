@@ -10,7 +10,12 @@
                 <div class="form-group">
                     <div class="col-m-10">
                         <mat-form-field style="width: 312px;">
-                            <input type="text" matInput placeholder="Product Name" formControlName="productName" />
+                            <input type="text" *ngIf="mode==='edit'" readonly matInput placeholder="Product Name" formControlName="productName" />
+                            <input type="text" *ngIf="mode==='add'" matInput placeholder="Product Name" formControlName="productName" />
+                            <mat-error *ngIf="this.productForm.get('productName')?.touched && this.productForm.get('productName')?.hasError('required')">
+                                address is required</mat-error>
+                                <mat-error *ngIf="this.productForm.get('productName')?.touched && this.productForm.get('productName')?.hasError('maxlength')">
+                                    maximum 50 characters is allowed. </mat-error>
                         </mat-form-field>
                     </div>
                 </div>
@@ -18,6 +23,10 @@
                     <div class="col-m-10">
                         <mat-form-field style="width: 312px;">
                             <textarea matInput placeholder="Description" formControlName="description"></textarea>
+                            <mat-error *ngIf="this.productForm.get('description')?.touched && this.productForm.get('description')?.hasError('required')">
+                                address is required</mat-error>
+                                <mat-error *ngIf="this.productForm.get('description')?.touched && this.productForm.get('description')?.hasError('maxlength')">
+                                    maximum 250 characters is allowed. </mat-error>
                         </mat-form-field>
                     </div>
                 </div>
@@ -41,8 +50,10 @@
                 </div>
                 <div class="form-group">
                     <div class="col-m-10">
-                        <input style="height: 2.5em;" type="file" class="form-control" placeholder="Product Picture"
+                        <input *ngIf="mode==='add'" style="height: 2.5em;" type="file" class="form-control" placeholder="Product Picture"
                             #image accept="image/*" name="image" (change)="handleFileInput($event)" />
+                        <!-- <input *ngIf="mode==='edit'" readonly style="height: 2.5em;" type="file" class="form-control" placeholder="Product Picture"
+                            #image accept="image/*" name="image" (change)="handleFileInput($event)" /> -->
                     </div>
                 </div>
             </div>

@@ -12,5 +12,9 @@
 .card-body {
     flex: 1 1 auto;
     min-height: 1px;
-    padding: 0.5rem;
+    padding: 0.25rem;
+}
+.my-flex-card > div > div.card {
+    height: calc(100% - 60px);
+    margin-bottom: 15px;
 }

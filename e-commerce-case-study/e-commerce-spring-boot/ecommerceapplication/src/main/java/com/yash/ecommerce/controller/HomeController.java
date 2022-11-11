@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.yash.ecommerce.entity.User;
@@ -71,6 +72,8 @@ public class HomeController {
         logger.debug("resp getStatus {}", resp.getStatus());
 		if(resp.getStatus() == "400") {
 			https = HttpStatus.BAD_REQUEST;
+		}else if(resp.getStatus() == "401") {
+			https = HttpStatus.UNAUTHORIZED;
 		}
  		return new ResponseEntity<ServerResponse>(resp, https);
 	}
@@ -82,9 +85,9 @@ public class HomeController {
 	 * @throws UserCustomException generate the user custom exception
 	 */
 	@PostMapping("/signup")
-	public ResponseEntity<ServerResponse> addUser(@RequestBody User user) throws UserCustomException {
+	public ResponseEntity<ServerResponse> addUser(@RequestBody User user, HttpServletRequest request) throws UserCustomException {
 		logger.info("inside adduser method of HomeController {}", user);
-		ServerResponse resp = service.addUser(user);
+		ServerResponse resp = service.addUser(user, request);
 		HttpStatus https = HttpStatus.ACCEPTED;
 		if(resp.getStatus() == "400") {
 			https = HttpStatus.BAD_REQUEST;
@@ -94,6 +97,16 @@ public class HomeController {
 		return new ResponseEntity<ServerResponse>(resp, https);
 	}
 	
+	
+	@GetMapping("/verify")
+	public ResponseEntity<ServerResponse> verifyUser(@RequestParam(name="code") String code) {
+		ServerResponse resp = new ServerResponse();
+	    if (service.verifyUser(code)) {
+	    	return new ResponseEntity<ServerResponse>(resp, HttpStatus.OK);
+	    } else {
+	    	return new ResponseEntity<ServerResponse>(resp, HttpStatus.INTERNAL_SERVER_ERROR);
+	    }
+	}
 	/**
 	 * this will clear the current user session and remove the token.
 	 * @param request hold the request coming from the client.

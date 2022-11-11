@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.transaction.Transactional;
 
 import org.apache.logging.log4j.LogManager;
@@ -24,6 +25,8 @@ import com.yash.ecommerce.repository.UserRepository;
 import com.yash.ecommerce.util.ConstantProperties;
 import com.yash.ecommerce.util.JwtUtil;
 import com.yash.ecommerce.util.Validator;
+
+import net.bytebuddy.utility.RandomString;
 
 /**
  * this will responsible to check the authentication, communicate with the database and map the result with entity classes.
@@ -47,6 +50,9 @@ public class HomeService {
 	@Autowired
 	private JwtUtil jwtutil;
 	
+	@Autowired
+	SendMailService mailService;
+	
 	public ServerResponse generateToken(HashMap<String, String> credential) throws UserCustomException {
 		logger.debug("inside generateToken method of HomeService {}", credential);
 		ServerResponse resp = new ServerResponse();
@@ -59,7 +65,8 @@ public class HomeService {
 		} else if (!Validator.isValidPassword(password)) {
 			resp.setStatus(ConstantProperties.BAD_REQUEST_CODE);
 			resp.setMessage(ConstantProperties.INVALID_PASSWORD_FAIL_MSG);
-		} else {
+		}else {
+			
 			try {
 				authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(email, password));
 			} catch (BadCredentialsException e) {
@@ -68,6 +75,14 @@ public class HomeService {
 				return resp;
 				//throw new UserCustomException("Invalid User Credentials");
 			}
+			
+			Optional<User> checkUser = userRepository.findByUserEmail(email);
+			if(!(checkUser.isPresent() && checkUser.get().isVerified())) {
+				resp.setStatus(ConstantProperties.UNAUTHORIZED);
+				resp.setMessage(ConstantProperties.NOT_VERIFIED);
+				return resp;
+			}
+			
 			final UserDetails userDetails = userDetailService.loadUserByUsername(email);
 			final String jwt = jwtutil.generateToken(userDetails);
 
@@ -87,7 +102,7 @@ public class HomeService {
 	}
 	
 	@Transactional
-	public ServerResponse addUser(User user) throws UserCustomException {
+	public ServerResponse addUser(User user, HttpServletRequest request) throws UserCustomException {
 		logger.info("inside adduser method of homeservice {}", user);
 		ServerResponse resp = new ServerResponse();
 		if (Validator.isUserEmpty(user)) {
@@ -101,11 +116,12 @@ public class HomeService {
 			resp.setMessage(ConstantProperties.INVALID_PASSWORD_FAIL_MSG);
 		} else {
 			Optional<User> checkUser = userRepository.findByUserEmail(user.getEmail());
-			logger.info("findByUserEmail response inside adduser method of homeservice {}", checkUser);
 			if(checkUser.isPresent()) {
+				logger.info("user already present");
 				resp.setMessage(ConstantProperties.USER_EMAIL_ALREADY_EXISTS);
 				resp.setStatus(ConstantProperties.CONFLICT);
 			}else {
+				logger.info("user going to add");
 				Authorities a = new Authorities();
 				a.setUserName(user.getUserName());
 				if (user.getUserType().equals("customer")) {
@@ -114,12 +130,17 @@ public class HomeService {
 					a.setAuthority("ROLE_ADMIN");
 				}
 				user.setRoles(List.of(a));
+				String randomCode = RandomString.make(64);
+				user.setVerificationCode(randomCode);
+				user.setVerified(false);
+				
 				try {
 					Optional<User> op = Optional.ofNullable(userRepository.save(user));
 					if (op.isPresent()) {
 						resp.setStatus(ConstantProperties.SUCCESS_CODE);
 						resp.setMessage(ConstantProperties.CUST_REG);
 						resp.setUserType(op.get().getUserType());
+					    mailService.sendSimpleEmail(Validator.getSiteURL(request), user);
 					}
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -128,5 +149,17 @@ public class HomeService {
 		}
 
 		return resp;
+	}
+	
+	public boolean verifyUser(String verificationCode) {
+	    User user = userRepository.findByVerificationCode(verificationCode);
+	    if (user == null || user.isVerified()) {
+	        return false;
+	    } else {
+	        user.setVerificationCode(null);
+	        user.setVerified(true);
+	        userRepository.save(user);
+	        return true;
+	    }
 	}
 }

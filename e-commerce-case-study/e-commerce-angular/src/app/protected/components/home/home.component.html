@@ -1,38 +1,42 @@
 <app-navigation></app-navigation>
 <div class="container">
-    <br>
-    <div class="row">
-        <div class="col-3 align-left" *ngFor="let product of products">
-                <div class="card shadow p-3 mb-5 bg-white rounded">
-                        <div class="card-body">
-                                <h2 class="card-title">{{product.productName}}</h2>
-                                <img src="data:image/png;base64,{{product.productimage}}" class="img-responsive"
-                                        height="150px" width="200px" alt="Image not found">
-                                <p class="card-text" matTooltip="{{product.description}}"> {{product.description}}</p>
-                                <input type="hidden" value={{product.productId}} #prdid>
-                                <div class="row" *ngIf="loggedType == 'admin'">
-                                        <div class="col-6">
-                                                <button class="btn btn-secondary" (click)="edit(product.productId)">Edit</button>
+        <br>
+        <div class="row my-flex-card">
+                <div class="col-3 align-left" *ngFor="let product of products">
+                        <div class="card shadow p-3 mb-5 bg-white rounded">
+                                <h2 class="card-header"
+                                        style="height: 100px;padding-top: 0.1em;padding-left: 0.3em;padding-right: 0px;padding-bottom: 0px;">
+                                        {{product.productName}}</h2>
+                                <img class="card-img-top" src="data:image/png;base64,{{product.productimage}}"
+                                        class="img-responsive" height="150px" width="200px" alt="Image not found">
+                                <div class="card-body flex-fill">
+                                        <!-- <h2 class="card-title">{{product.productName}}</h2> -->
+                                        <p class="card-text" matTooltip="{{product.description}}">
+                                                {{product.description}}</p>
+                                        <input type="hidden" value={{product.productId}} #prdid>
+                                        <div class="row" *ngIf="loggedType == 'admin'">
+                                                <div class="col-6">
+                                                        <button class="btn btn-secondary"
+                                                                (click)="edit(product.productId)">Edit</button>
+                                                </div>
+                                                <div class="col-6">
+                                                        <button class="btn btn-danger"
+                                                                (click)="delProd(product.productId)">Remove</button>
+                                                </div>
                                         </div>
-                                        <div class="col-6">
-                                                <button class="btn btn-danger" (click)="delProd(product.productId)"
-                                                        >Remove</button>
-                                        </div>
-                                </div>
-                                <div class="row" *ngIf="loggedType == 'customer'" fxLayout="row" fxLayoutAlign="space-between center">
-                                        <!-- <div>
-                                                <button class="btn btn-secondary" (click)="addToCart(product)">Add To Cart</button>
-                                        </div> -->
-                                        <div >
-                                                <button class="btn btn-secondary" (click)="addToCart(product)">Add To Cart</button>
-                                        </div>
-                                        <div >
-                                                <button class="btn btn-danger" (click)="buyNow(product)"
-                                                        >Buy Now</button>
+                                        <div class="row" *ngIf="loggedType == 'customer'" fxLayout="row"
+                                                fxLayoutAlign="space-between center">
+                                                <div>
+                                                        <button class="btn btn-secondary"
+                                                                (click)="addToCart(product)">Add To Cart</button>
+                                                </div>
+                                                <div>
+                                                        <button class="btn btn-danger" (click)="buyNow(product)">Buy
+                                                                Now</button>
+                                                </div>
                                         </div>
                                 </div>
                         </div>
                 </div>
         </div>
-</div>
 </div>

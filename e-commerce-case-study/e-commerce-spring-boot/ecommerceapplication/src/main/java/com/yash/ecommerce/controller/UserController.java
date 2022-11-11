@@ -238,6 +238,18 @@ public class UserController {
 		}
 		return new ResponseEntity<ServerResponse>(resp, https);
 	}
-
-
+	
+	@GetMapping("/checkOrderStatusByProductId")
+	public ResponseEntity<ServerResponse> checkOrderStatusByProductId(@RequestParam(name = ConstantProperties.PROD_ID) String productId,
+			Authentication auth) throws IOException {
+        
+		ServerResponse resp = null;
+		try {
+			resp = userService.checkOrderStatusByProductId(productId, auth);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return new ResponseEntity<ServerResponse>(resp, HttpStatus.OK);
+	}
 }

@@ -23,6 +23,7 @@ export const environment = {
   updateOrderUrl : "/admin/updateOrder",
   placeOrderUrl : "/user/placeOrder",
   logoutUrl : "/home/logout",
+  checkOrderStatusByProductIdUrl : "/user/checkOrderStatusByProductId"
 };
 
 /*

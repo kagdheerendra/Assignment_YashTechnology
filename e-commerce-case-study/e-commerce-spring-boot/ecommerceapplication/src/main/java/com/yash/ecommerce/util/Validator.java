@@ -1,5 +1,7 @@
 package com.yash.ecommerce.util;
 
+import javax.servlet.http.HttpServletRequest;
+
 import com.yash.ecommerce.entity.Address;
 import com.yash.ecommerce.entity.User;
 
@@ -70,5 +72,10 @@ public class Validator {
 			return true;
 		}
 		return false;
+	}
+	
+	public static String getSiteURL(HttpServletRequest request) {
+		String siteURL = request.getRequestURL().toString();
+		return siteURL.replace(request.getServletPath(), "");
 	}
 }

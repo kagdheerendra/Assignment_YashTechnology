@@ -363,45 +363,30 @@ public class UserService {
 		return resp;
 	}
 
-//		ServerResponse resp = new ServerResponse();
-//		try {
-//			User loggedUser = userRepository.findByUserName(auth.getName())
-//					.orElseThrow(() -> new UserCustomException(auth.getName()));
-//			PlaceOrder po = new PlaceOrder();
-//			po.setEmail(loggedUser.getEmail());
-//			Date date = new Date();
-//			po.setOrderDate(date);
-//			po.setOrderStatus(ConstantProperties.ORD_STATUS_CODE);
-//			double total = 0;
-//			List<Bufcart> buflist = cartRepository.findAllByEmail(loggedUser.getEmail());
-//			if(buflist.size()>0) {
-//				for (Bufcart buf : buflist) {
-//					total = +(buf.getQuantity() * buf.getPrice());
-//				}
-//				po.setTotalCost(total);
-//				PlaceOrder res = orderRepository.save(po);
-//				if(res != null) {
-//					buflist.forEach(bufcart -> {
-//					bufcart.setOrderId(res.getOrderId());
-//					cartRepository.save(bufcart);
-//	
-//				});
-//					resp.setStatus(ConstantProperties.SUCCESS_CODE);
-//					resp.setMessage(ConstantProperties.ORD_SUCCESS_MESSAGE);					
-//				}else {
-//					resp.setStatus(ConstantProperties.FAILURE_CODE);
-//					resp.setMessage(ConstantProperties.FAILURE_MESSAGE);
-//					throw new PlaceOrderCustomException("Unable to place order, please try again later");
-//				}
-//			}else {
-//				resp.setStatus(ConstantProperties.FAILURE_CODE);
-//				resp.setMessage(ConstantProperties.FAILURE_MESSAGE);
-//				throw new CartCustomException("Unable to find cart items, please try again");
-//			}
-//
-//		} catch (Exception e) {
-//			e.printStackTrace();
-//		}
-//		return resp;
-//	}
+	public ServerResponse checkOrderStatusByProductId(String productId, Authentication auth) {
+		ServerResponse resp = new ServerResponse();
+		logger.debug("productId {}",productId);
+		try {
+			User loggedUser = userRepository.findByUserName(auth.getName())
+					.orElseThrow(() -> new UserCustomException(auth.getName()));
+			logger.debug("loggedUser {}",loggedUser.getEmail());
+			List<Bufcart> list = cartRepository.findByEmail(loggedUser.getEmail());
+			logger.debug("list {}",list.toString());
+			for(Bufcart cart:list) {
+				System.out.println(cart.getOrderId()+"::"+cart.getProductId());
+				if(cart.getOrderId() != 0 && cart.getProductId() == Integer.parseInt(productId)) {
+					logger.info("condition is true");
+					resp.setStatus(ConstantProperties.SUCCESS_CODE);
+					resp.setMessage("Product is already pending for admin approval");
+					break;
+				}else {
+					resp.setStatus(ConstantProperties.NOT_FOUND);
+					resp.setMessage("Product not found");
+				}
+			}
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		return resp;
+	}
 }

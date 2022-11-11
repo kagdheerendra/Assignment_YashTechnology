@@ -18,6 +18,7 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 /**
  * this entity class is responsible to hold user information.
+ * 
  * @author dheerendra.kag
  *
  */
@@ -33,7 +34,7 @@ public class User implements Serializable {
 	 */
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int userId; 
+	private int userId;
 	/**
 	 * this will hold the current email of this user.
 	 */
@@ -52,7 +53,16 @@ public class User implements Serializable {
 	private String userType;
 
 	/**
-	 * this will hold the current address information of this user. 
+	 * this will hold the current verificationCode of this user.
+	 */
+	private String verificationCode;
+
+	/**
+	 * this will hold the current user verification status.
+	 */
+	private boolean isVerified;
+	/**
+	 * this will hold the current address information of this user.
 	 */
 	@OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "user")
 	@JsonManagedReference
@@ -74,13 +84,14 @@ public class User implements Serializable {
 
 	/**
 	 * this constructs a user with specified parameter
-	 * @param userId  the unique primary key of the user 
-	 * @param email   the email of the user
-	 * @param userName the userName of the user 
+	 * 
+	 * @param userId   the unique primary key of the user
+	 * @param email    the email of the user
+	 * @param userName the userName of the user
 	 * @param password the password of the user
 	 * @param userType the type to user
-	 * @param address the address of the user
-	 * @param roles the authority of the user
+	 * @param address  the address of the user
+	 * @param roles    the authority of the user
 	 */
 	public User(int userId, String email, String userName, String password, String userType, Address address,
 			List<Authorities> roles) {
@@ -96,6 +107,7 @@ public class User implements Serializable {
 
 	/**
 	 * this will return the current id of this user
+	 * 
 	 * @return this user's userId
 	 */
 	public int getUserId() {
@@ -104,6 +116,7 @@ public class User implements Serializable {
 
 	/**
 	 * this will set the id of the user
+	 * 
 	 * @param userId unique id of the user
 	 */
 	public void setUserId(int userId) {
@@ -112,6 +125,7 @@ public class User implements Serializable {
 
 	/**
 	 * this will return the current email of this user
+	 * 
 	 * @return this user's email
 	 */
 	public String getEmail() {
@@ -120,6 +134,7 @@ public class User implements Serializable {
 
 	/**
 	 * this will set the email to this user
+	 * 
 	 * @param email email of the user
 	 */
 	public void setEmail(String email) {
@@ -128,6 +143,7 @@ public class User implements Serializable {
 
 	/**
 	 * this will return the current userName of this user
+	 * 
 	 * @return this user's userName
 	 */
 	public String getUserName() {
@@ -136,14 +152,16 @@ public class User implements Serializable {
 
 	/**
 	 * this will set the userName of this user
+	 * 
 	 * @param userName name of the user
 	 */
 	public void setUserName(String userName) {
 		this.userName = userName;
 	}
-	
+
 	/**
 	 * this will return the current password of this user
+	 * 
 	 * @return this user's password;
 	 */
 
@@ -153,6 +171,7 @@ public class User implements Serializable {
 
 	/**
 	 * this will set the password of this user
+	 * 
 	 * @param password password of the user
 	 */
 	public void setPassword(String password) {
@@ -161,6 +180,7 @@ public class User implements Serializable {
 
 	/**
 	 * this will return the type of this user
+	 * 
 	 * @return this user's userType
 	 */
 	public String getUserType() {
@@ -169,6 +189,7 @@ public class User implements Serializable {
 
 	/**
 	 * this will set the type of this user
+	 * 
 	 * @param userType type of the user
 	 */
 	public void setUserType(String userType) {
@@ -177,6 +198,7 @@ public class User implements Serializable {
 
 	/**
 	 * this will return the current address of this user
+	 * 
 	 * @return address of this user's
 	 */
 	public Address getAddress() {
@@ -185,6 +207,7 @@ public class User implements Serializable {
 
 	/**
 	 * this will set the address to this user
+	 * 
 	 * @param address address of this user
 	 */
 	public void setAddress(Address address) {
@@ -193,6 +216,7 @@ public class User implements Serializable {
 
 	/**
 	 * this will return the all roles of this user
+	 * 
 	 * @return role of this user's
 	 */
 	public List<Authorities> getRoles() {
@@ -201,15 +225,31 @@ public class User implements Serializable {
 
 	/**
 	 * this will set the roles to this user
+	 * 
 	 * @param roles roles of this user's
 	 */
 	public void setRoles(List<Authorities> roles) {
 		this.roles = roles;
 	}
 
-	
 	public static long getSerialversionuid() {
 		return serialVersionUID;
+	}
+
+	public String getVerificationCode() {
+		return verificationCode;
+	}
+
+	public void setVerificationCode(String verificationCode) {
+		this.verificationCode = verificationCode;
+	}
+
+	public boolean isVerified() {
+		return isVerified;
+	}
+
+	public void setVerified(boolean isVerified) {
+		this.isVerified = isVerified;
 	}
 
 	/**
@@ -218,7 +258,7 @@ public class User implements Serializable {
 	@Override
 	public String toString() {
 		return "User [userId=" + userId + ", email=" + email + ", userName=" + userName + ", password=" + password
-				+ ", userType=" + userType + ", address=" + address + ", roles=" + roles + "]";
+				+ ", userType=" + userType + ", verificationCode=" + verificationCode + ", isVerified=" + isVerified
+				+ ", address=" + address + ", roles=" + roles + "]";
 	}
-
 }
