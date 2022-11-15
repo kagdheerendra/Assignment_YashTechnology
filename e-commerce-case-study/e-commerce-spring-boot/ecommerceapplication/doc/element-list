@@ -1,0 +1,9 @@
+com.yash.ecommerce
+com.yash.ecommerce.config
+com.yash.ecommerce.controller
+com.yash.ecommerce.entity
+com.yash.ecommerce.exception
+com.yash.ecommerce.model
+com.yash.ecommerce.repository
+com.yash.ecommerce.service
+com.yash.ecommerce.util

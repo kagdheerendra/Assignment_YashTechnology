@@ -15,11 +15,13 @@ const routes: Routes = [
   },
   {
     path: 'home/order',
-    component: OrderItemComponent
+    component: OrderItemComponent,
+    canActivate:[AuthGuard]
   },
   {
     path: 'home/cart',
-    component: CartItemComponent
+    component: CartItemComponent,
+    canActivate:[AuthGuard]
   },
   
   {
