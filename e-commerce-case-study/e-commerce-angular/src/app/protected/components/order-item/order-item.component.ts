@@ -18,8 +18,10 @@ export class OrderItemComponent implements OnInit {
     ) { }
 
   ngOnInit() {
-    if (this.api.isAuthenticated()) {
+    if (this.api.isAuthenticated() && this.api.getAuthType() === 'admin') {
       this.getOrderList();
+    }else{
+      this.route.navigate(['/public']);
     }
   }
 

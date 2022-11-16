@@ -27,7 +27,7 @@ export class CartItemComponent implements OnInit {
   }
 
   ngOnInit() {
-    if(this.api.isAuthenticated()){
+    if(this.api.isAuthenticated() && this.api.getAuthType() === 'customer'){
       this.api.getCartItems().subscribe((res: { oblist: any[]; }) => {
         let oblist = res.oblist;
         oblist.forEach(item =>{
@@ -45,6 +45,8 @@ export class CartItemComponent implements OnInit {
        this.getTotalCast();
        this.showLoader = false;
      });
+    }else {
+      this.route.navigate(['/public']);
     }
   }
   updateCart(id: any, quantity: any) {
