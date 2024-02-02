@@ -140,7 +140,7 @@ public class HomeService {
 						resp.setStatus(ConstantProperties.SUCCESS_CODE);
 						resp.setMessage(ConstantProperties.CUST_REG);
 						resp.setUserType(op.get().getUserType());
-					    mailService.sendSimpleEmail(Validator.getSiteURL(request), user);
+					        //mailService.sendSimpleEmail(Validator.getSiteURL(request), user);
 					}
 				} catch (Exception e) {
 					e.printStackTrace();
