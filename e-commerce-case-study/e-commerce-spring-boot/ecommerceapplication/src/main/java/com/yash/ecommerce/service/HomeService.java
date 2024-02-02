@@ -132,7 +132,7 @@ public class HomeService {
 				user.setRoles(List.of(a));
 				String randomCode = RandomString.make(64);
 				user.setVerificationCode(randomCode);
-				user.setVerified(false);
+				user.setVerified(true);
 				
 				try {
 					Optional<User> op = Optional.ofNullable(userRepository.save(user));
