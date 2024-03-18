@@ -1,7 +1,7 @@
 pipeline {
     agent any
     tools {
-        jdk 'jdk13'
+        jdk 'jdk8'
         maven 'maven3'
     }
     stages {
@@ -10,8 +10,7 @@ pipeline {
                 git 'https://github.com/kagdheerendra/Assignment_YashTechnology.git'
             }
         }
-
-        stage('Install') {
+       stage('Install') {
             steps {
                 sh "mvn package"
             }
@@ -27,11 +26,11 @@ pipeline {
                 }
             }
         }
-	stage('Go to the dir') {
-		steps {
-			bat 'cd e-commerce-case-study/e-commerce-spring-boot/ecommerceapplication'
+		stage('Go to the dir') {
+			steps {
+				bat 'cd e-commerce-case-study/e-commerce-spring-boot/ecommerceapplication'
+			}
 		}
-	}
         stage('build') {
 	      steps {
 		    bat 'mvn clean install -DskipTests'
