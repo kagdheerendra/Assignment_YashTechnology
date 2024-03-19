@@ -161,7 +161,9 @@ public class AdminService {
 						() -> new ProductCustomException("Unable to find product details, please try again"));
 				resp.setStatus(ConstantProperties.SUCCESS_CODE);
 				resp.setMessage(ConstantProperties.DEL_SUCCESS_MESSAGE);
-				resp.setOblist(List.of(p));
+				List<Product> pList = new ArrayList();
+				pList.add(p);
+				resp.setOblist(pList);
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
