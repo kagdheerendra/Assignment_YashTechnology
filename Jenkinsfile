@@ -2,7 +2,7 @@ pipeline {
     agent any
     tools {
 	maven "Maven 3.9.6" 
-	jdk "JAVA_HOME"
+	jdk "jdk8"
     }
     stages {
 	stage('Go to the dir') {
