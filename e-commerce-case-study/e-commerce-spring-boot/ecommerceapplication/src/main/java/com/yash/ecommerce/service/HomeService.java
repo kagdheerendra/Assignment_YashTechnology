@@ -129,7 +129,9 @@ public class HomeService {
 				} else if (user.getUserType().equals("admin")) {
 					a.setAuthority("ROLE_ADMIN");
 				}
-				user.setRoles(List.of(a));
+				List<Authorities> authList = new ArrayList();
+				authList.add(a);
+				user.setRoles(authList);
 				String randomCode = RandomString.make(64);
 				user.setVerificationCode(randomCode);
 				user.setVerified(true);
