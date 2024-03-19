@@ -7,8 +7,9 @@ pipeline {
     stages {
 	stage('Go to the dir') {
 		steps {
-			bat 'cd e-commerce-case-study/e-commerce-spring-boot/ecommerceapplication'
-			bat 'mvn clean install -DskipTests'
+			dir('e-commerce-case-study/e-commerce-spring-boot/ecommerceapplication/'){
+				bat 'mvn clean install -DskipTests'
+			}
 		}
 	}
     }
