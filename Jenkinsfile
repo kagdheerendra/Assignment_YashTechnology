@@ -12,5 +12,19 @@ pipeline {
 			}
 		}
 	}
+	stage('Sonarqube Analysis - SAST') {
+	    steps {
+		  withSonarQubeEnv('sonarqubeserver') {
+	                 bat "mvn sonar:sonar \
+			-Dsonar.projectKey=ecommer-jenkins-pipeline \
+			-Dsonar.host.url=http://localhost:9090" 
+		}
+	    timeout(time: 2, unit: 'MINUTES') {
+		      script {
+			waitForQualityGate abortPipeline: true
+		    }
+		}
+	      }
+	}
     }
 }
