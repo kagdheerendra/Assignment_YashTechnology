@@ -18,7 +18,7 @@ pipeline {
 				withSonarQubeEnv('sonarqubeserver') {
 					 bat "mvn sonar:sonar \
 					-Dsonar.projectKey=ecommer-jenkins-pipeline \
-					-Dsonar.host.url=http://localhost:9090" 
+					-Dsonar.host.url=http://localhost:9000" 
 				}
 				timeout(time: 2, unit: 'MINUTES') {
 				      script {
